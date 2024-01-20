@@ -1,8 +1,8 @@
 // timer section
 //timer variables
 var timeEl = document.querySelector(".time");
-var secondsLeft = 10; //75
-var button = document.querySelector(".quiz-button");
+var secondsLeft = 76;
+var startButton = document.querySelector(".quiz-button");
 
 // timer function
 function startTime() {
@@ -10,7 +10,7 @@ function startTime() {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
 
-    if(secondsLeft === 0) {
+    if(secondsLeft <= 0) {
       clearInterval(timerInterval);
       sendMessage();
     }
@@ -22,13 +22,6 @@ function sendMessage() {
   timeEl.textContent = "You're Time is up!";
 }
 
-// calling the functions
-button.addEventListener("click", () => {
-  startTime();
-  clear();
-  answersButtons();
-});
-
 // quiz section
 // array: [questions, answers, correct answers]
 var questionsArray = [
@@ -39,7 +32,7 @@ var questionsArray = [
       c: 'alerts',
       d: 'numbers'
     },
-    correctAnswer: 'alerts'
+    correctAnswer: 'c'
   },
   {question: 'The condition in an if/else statement is enclosed within _______.',
     answers: {
@@ -48,7 +41,7 @@ var questionsArray = [
       c: 'parentheses',
       d: 'square brackets'
     },
-    correctAnswer: 'parentheses'
+    correctAnswer: 'c'
   },
   {question: 'Arrays in JavaScript can be used to store ________.',
     answers: {
@@ -57,7 +50,7 @@ var questionsArray = [
       c: 'booleans',
       d: 'all of the above'
     },
-    correctAnswer: 'all of the above'
+    correctAnswer: 'd'
   },
     {question: 'String values must be enclosed within ________ when being assigned to variables.',
       answers: {
@@ -66,37 +59,25 @@ var questionsArray = [
         c: 'quotes',
         d: 'parentheses'
       },
-      correctAnswer: 'quotes'
+      correctAnswer: 'c'
   },
-    {question: 'A very useful tool used during devekopment and debugging for printing content to the debugger is:',
-      answers: {
-        a: 'JavaScript',
-        b: 'terminal/bash',
-        c: 'for loops',
-        d: 'console.log'
-      },
-      correctAnswer: 'console.log'
+  {question: 'A very useful tool used during development and debugging for printing content to the debugger is:',
+    answers: {
+      a: 'JavaScript',
+      b: 'terminal/bash',
+      c: 'for loops',
+      d: 'console.log'
+    },
+    correctAnswer: 'd'
   },
 ];
-// clear start page html to start quiz
-function clear() {
-  var startPage = document.getElementById("start-page");
-  startPage.style.display = "none";
-}
-// display answer buttons
-function answersButtons() {
-  var answersButtons = document.querySelectorAll(".answers-buttons");
-  answersButtons.forEach(function(button) {
-    button.style.display = "block";
-  });
-};
 
-// Attach click event listeners to buttons
-for (let i = 0; i < questionsArray.length; i++) {
-  button.addEventListener('click', function() {
-    showQuestion(i);
-  });
-}
+// calling the functions
+startButton.addEventListener("click", function() {
+  startTime();
+  clear();
+  showQuestion(0);
+});
 
 // Function to show a question
 function showQuestion(questionIndex) {
@@ -105,12 +86,42 @@ function showQuestion(questionIndex) {
 
   // Construct the HTML for the question and answers
   var questionHTML = '<p>' + questionsArray[questionIndex].question + '</p>';
-  questionHTML += '<ul>';
+  questionHTML += '<ul class="answers-buttons">';
   for (var key in questionsArray[questionIndex].answers) {
-    questionHTML += '<li><button>' + key + ': ' + questionsArray[questionIndex].answers[key] + '</button></li>';
+    questionHTML += '<li><button class="answers-button" data-answer="' + key + '">' + questionsArray[questionIndex].answers[key] + '</button></li>';
   }
   questionHTML += '</ul>';
 
   // Update the display area with the question HTML
   displayArea.innerHTML = questionHTML;
+
+  // Attach click event listeners to answer buttons
+  var answerButtons = document.querySelectorAll('.answers-button');
+  answerButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var selectedAnswer = button.getAttribute('data-answer');
+      var correctAnswer = questionsArray[questionIndex].correctAnswer;
+
+      // Check if the selected answer is correct
+      if (selectedAnswer === correctAnswer) {
+        console.log('Correct answer selected:', selectedAnswer);
+        // Move to the next question (if available)
+        if (questionIndex < questionsArray.length - 1) {
+          showQuestion(questionIndex + 1);
+        } else {
+          // Quiz is completed
+          console.log('Quiz completed!');
+        }
+      } else {
+        // Handle incorrect answer logic (if needed)
+        console.log('Incorrect answer selected:', selectedAnswer);
+      }
+    });
+  });
+}
+
+// clear start page html to start quiz
+function clear() {
+  var startPage = document.getElementById("start-page");
+  startPage.style.display = "none";
 }
