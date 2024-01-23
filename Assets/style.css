@@ -31,12 +31,6 @@ p{
     display: block;
 }
 
-#answers {
-    display: flex;
-    justify-content: center;
-    padding: 100px;
-}
-
 .start-button {
     padding: 20px;
     margin: auto;

@@ -95,26 +95,32 @@ function showQuestion(questionIndex) {
   // Update the display area with the question HTML
   displayArea.innerHTML = questionHTML;
 
+  
   // Attach click event listeners to answer buttons
   var answerButtons = document.querySelectorAll('.answers-button');
   answerButtons.forEach(function(button) {
     button.addEventListener('click', function() {
       var selectedAnswer = button.getAttribute('data-answer');
       var correctAnswer = questionsArray[questionIndex].correctAnswer;
+      var resultEl = document.querySelector(".result");
+      // var endEl = document.querySelector(".end-quiz");
 
       // Check if the selected answer is correct
       if (selectedAnswer === correctAnswer) {
-        console.log('Correct answer selected:', selectedAnswer);
+        // console.log('Correct answer selected:', selectedAnswer);
+        resultEl.textContent = "Correct!";
         // Move to the next question (if available)
         if (questionIndex < questionsArray.length - 1) {
           showQuestion(questionIndex + 1);
         } else {
           // Quiz is completed
           console.log('Quiz completed!');
+          displayArea.style.display = "none";
         }
       } else {
         // Handle incorrect answer logic (if needed)
-        console.log('Incorrect answer selected:', selectedAnswer);
+        // console.log('Incorrect answer selected:', selectedAnswer);
+        resultEl.textContent = "Wrong!";
       }
     });
   });
