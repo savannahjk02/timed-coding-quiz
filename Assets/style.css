@@ -54,3 +54,32 @@ p{
     background: none;
     padding: 20px;
 }
+
+#content {
+    font-size: 20px;
+    max-width: 50%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+#quiz-container {
+    
+}
+
+.result {
+    position: absolute;
+    bottom: -5%;
+}
+
+.end-quiz {
+    font-size: 40px;
+    padding-bottom: 10%;
+}
+
+ul {
+    list-style-type: none;
+    border-bottom: solid gray;
+    padding: 5%;
+}

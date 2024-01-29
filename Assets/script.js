@@ -3,6 +3,8 @@
 var timeEl = document.querySelector(".time");
 var secondsLeft = 76;
 var startButton = document.querySelector(".quiz-button");
+var endEl = document.querySelector(".end-quiz");
+var displayArea = document.getElementById('quiz-container');
 
 // timer function
 function startTime() {
@@ -13,6 +15,8 @@ function startTime() {
     if(secondsLeft <= 0) {
       clearInterval(timerInterval);
       sendMessage();
+      displayArea.style.display = "none";
+      endEl.textContent = "All Done!";
     }
   }, 1000);
 }
@@ -81,8 +85,6 @@ startButton.addEventListener("click", function() {
 
 // Function to show a question
 function showQuestion(questionIndex) {
-  // Get the display area
-  var displayArea = document.getElementById('quiz-container');
 
   // Construct the HTML for the question and answers
   var questionHTML = '<p>' + questionsArray[questionIndex].question + '</p>';
@@ -103,25 +105,27 @@ function showQuestion(questionIndex) {
       var selectedAnswer = button.getAttribute('data-answer');
       var correctAnswer = questionsArray[questionIndex].correctAnswer;
       var resultEl = document.querySelector(".result");
-      // var endEl = document.querySelector(".end-quiz");
+      
 
       // Check if the selected answer is correct
       if (selectedAnswer === correctAnswer) {
         // console.log('Correct answer selected:', selectedAnswer);
         resultEl.textContent = "Correct!";
-        // Move to the next question (if available)
-        if (questionIndex < questionsArray.length - 1) {
-          showQuestion(questionIndex + 1);
-        } else {
-          // Quiz is completed
-          console.log('Quiz completed!');
-          displayArea.style.display = "none";
-        }
       } else {
         // Handle incorrect answer logic (if needed)
         // console.log('Incorrect answer selected:', selectedAnswer);
         resultEl.textContent = "Wrong!";
       }
+        // Move to the next question (if available)
+        if (questionIndex < questionsArray.length - 1) {
+          showQuestion(questionIndex + 1);
+        } else {
+          // Quiz is completed
+          // console.log('Quiz completed!');
+          displayArea.style.display = "none";
+          endEl.textContent = "All Done!";
+        }
+      
     });
   });
 }
