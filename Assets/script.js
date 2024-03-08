@@ -4,6 +4,8 @@ var timeEl = document.querySelector(".time");
 var secondsLeft = 76;
 var startButton = document.querySelector(".quiz-button");
 var endEl = document.querySelector(".end-quiz");
+var initialsEl = document.querySelector(".initials");
+var endQuizHTML = '<label for="initials">Enter Your Initials:</label>';
 var displayArea = document.getElementById('quiz-container');
 
 // timer function
@@ -11,16 +13,12 @@ function startTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
-
-    if(secondsLeft <= 0) {
-      clearInterval(timerInterval);
-      sendMessage();
-      displayArea.style.display = "none";
-      endEl.textContent = "All Done!";
-    }
   }, 1000);
 }
-
+if(secondsLeft <= 0 || questionIndex < questionsArray.length - 1) {
+  clearInterval(timerInterval);
+  sendMessage();
+}
 // time is up message
 function sendMessage() {
   timeEl.textContent = "You're Time is up!";
@@ -97,7 +95,6 @@ function showQuestion(questionIndex) {
   // Update the display area with the question HTML
   displayArea.innerHTML = questionHTML;
 
-  
   // Attach click event listeners to answer buttons
   var answerButtons = document.querySelectorAll('.answers-button');
   answerButtons.forEach(function(button) {
@@ -106,7 +103,6 @@ function showQuestion(questionIndex) {
       var correctAnswer = questionsArray[questionIndex].correctAnswer;
       var resultEl = document.querySelector(".result");
       
-
       // Check if the selected answer is correct
       if (selectedAnswer === correctAnswer) {
         // console.log('Correct answer selected:', selectedAnswer);
@@ -115,20 +111,39 @@ function showQuestion(questionIndex) {
         // Handle incorrect answer logic (if needed)
         // console.log('Incorrect answer selected:', selectedAnswer);
         resultEl.textContent = "Wrong!";
+        // Subtract 10 seconds for incorrect answers
+        secondsLeft -= 10;
+        // Ensure the timer doesn't go below zero
+        if (secondsLeft < 0) {
+          secondsLeft = 0;
       }
+    }
         // Move to the next question (if available)
-        if (questionIndex < questionsArray.length - 1) {
+        if (questionIndex < questionsArray.length - 1 && secondsLeft > 0) {
           showQuestion(questionIndex + 1);
         } else {
           // Quiz is completed
           // console.log('Quiz completed!');
           displayArea.style.display = "none";
           endEl.textContent = "All Done!";
+          endQuizHTML += '<input type="text" id="initials" />';
+          endQuizHTML += '<button class="submit-initials">Submit</button>';
+          initialsEl.innerHTML = endQuizHTML;
         }
-      
     });
   });
 }
+
+// View Highscores Section
+
+var submitButton = document.querySelector(".submit-initials");
+  submitButton.addEventListener("click", function () {
+    // Get the entered initials
+    var enteredInitials = document.getElementById("initials").value;
+
+    // You can now use enteredInitials as needed (e.g., save to localStorage, send to server, etc.)
+    console.log("Entered Initials:", enteredInitials);
+  });
 
 // clear start page html to start quiz
 function clear() {

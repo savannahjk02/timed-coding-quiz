@@ -64,8 +64,8 @@ p{
     position: relative;
 }
 
-#quiz-container {
-    
+.initials {
+    margin: 10%;
 }
 
 .result {
