@@ -10,7 +10,7 @@ N/A
 
 ## Usage
 
-This site is accessible using [Secure Password Generator](https://savannahjk02.github.io/secure-password-generator/).
+This site is accessible using [Secure Password Generator](https://savannahjk02.github.io/timed-coding-quiz/).
 
 The site will look like the following screenshots:
 

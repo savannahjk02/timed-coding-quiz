@@ -13,11 +13,12 @@ function startTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
-  }, 1000);
-}
+
 if(secondsLeft <= 0 || questionIndex < questionsArray.length - 1) {
   clearInterval(timerInterval);
   sendMessage();
+}
+}, 1000);
 }
 // time is up message
 function sendMessage() {
@@ -136,14 +137,14 @@ function showQuestion(questionIndex) {
 
 // View Highscores Section
 
-var submitButton = document.querySelector(".submit-initials");
-  submitButton.addEventListener("click", function () {
-    // Get the entered initials
-    var enteredInitials = document.getElementById("initials").value;
+// var submitButton = document.querySelector(".submit-initials");
+//   submitButton.addEventListener("click", function () {
+//     // Get the entered initials
+//     var enteredInitials = document.getElementById("initials").value;
 
-    // You can now use enteredInitials as needed (e.g., save to localStorage, send to server, etc.)
-    console.log("Entered Initials:", enteredInitials);
-  });
+//     // You can now use enteredInitials as needed (e.g., save to localStorage, send to server, etc.)
+//     console.log("Entered Initials:", enteredInitials);
+//   });
 
 // clear start page html to start quiz
 function clear() {
