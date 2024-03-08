@@ -8,13 +8,14 @@ var initialsEl = document.querySelector(".initials");
 var endQuizHTML = '<label for="initials">Enter Your Initials:</label>';
 var displayArea = document.getElementById('quiz-container');
 
+
 // timer function
 function startTime() {
   var timerInterval = setInterval(function() {
     secondsLeft--;
     timeEl.textContent = "Time: " + secondsLeft;
 
-if(secondsLeft <= 0 || questionIndex < questionsArray.length - 1) {
+if(secondsLeft <= 0) {
   clearInterval(timerInterval);
   sendMessage();
 }
@@ -136,15 +137,7 @@ function showQuestion(questionIndex) {
 }
 
 // View Highscores Section
-
-// var submitButton = document.querySelector(".submit-initials");
-//   submitButton.addEventListener("click", function () {
-//     // Get the entered initials
-//     var enteredInitials = document.getElementById("initials").value;
-
-//     // You can now use enteredInitials as needed (e.g., save to localStorage, send to server, etc.)
-//     console.log("Entered Initials:", enteredInitials);
-//   });
+//todo
 
 // clear start page html to start quiz
 function clear() {
